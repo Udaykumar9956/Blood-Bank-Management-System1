@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bank Management System</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #fffbea;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c0392b;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #fdf6e3;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333; 
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e74c3c;
+    }
+
+    th {
+      background-color: #f7c6c6;
+      color: #333;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .navbar-brand2 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-left: auto;
+    }
+  </style>
+  <link rel="icon" href="{{ url_for('static', filename='icon.jpg') }}" type="image/jpg">
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/homepage">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOWeRmImCOMSWGzrtys6h5gR5Ef5b_kr-UPg&s" style="height: 20px;" alt="Logo" class="rounded">
+      Blood Bank
+    </a>
+
+    <div class="navbar-brand2">
+      <a href="/" class="text-white">
+        <img src="https://cdn-icons-png.flaticon.com/512/4436/4436646.png" style="height: 20px;" alt="Logo" class="rounded">
+        Log out
+      </a>
+    </div>
+  </nav>
+
+  <h1>New Donor</h1>
+
+  <!-- Donor Form -->
+  <form id="donorForm" action="/insertdonor" , method="POST">
+    <label for="Name">Name:</label>
+    <input type="text" id="donorName" name="donorName" placeholder="Name" required pattern="[A-Za-z\s]{3,}" title="Enter at least 3 letters"/>
+
+    <label for="Gender">Gender:</label> 
+    <select id="Gender" name="Gender" required>
+      <option value="">Select Gender</option> 
+      <option value="Male">Male</option> 
+      <option value="Female">Female</option>
+      <option value="Others">Others</option>
+    </select>
+
+    <label for="bloodType">Blood Type:</label>
+    <select id="bloodType" name="bloodType" required>
+      <option value="">Select Blood Type</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option> 
+      <option value="B-">B-</option> 
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+    </select>
+
+    <label for="phoneNumber">Phone Number:</label>
+    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Mobile number" required pattern="[0-9]{10}" title="Enter a 10-digit phone number"/>
+
+    <label for="Email">Email:</label>
+    <input type="email" id="Email" name="Email" required placeholder="Email"/>
+
+    <label for="pLocation">Primary Location:</label> 
+    <input type="text" id="pLocation" name="pLocation" placeholder="Town" required />
+
+    <label for="sLocation">Secondary Location:</label> 
+    <input type="text" id="sLocation" name="sLocation" placeholder="Town" required />
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div id="flashMsg" class="alert alert-success text-center">
+        {{ messages[0] }}
+      </div>
+      <script>
+        setTimeout(() => {
+          document.getElementById('flashMsg').style.display = 'none';
+        }, 3000); // Auto-hide after 3 seconds
+      </script>
+    {% endif %}
+  {% endwith %}
+
+
+
+    <button type="submit">Add Donor</button> 
+  </form>
+
+  <!-- Donor Table
+  <div class="table-responsive px-3">
+    <table id="donorTable" class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Gender</th>
+          <th>Blood Type</th>
+          <th>Phone Number</th>
+          <th>Email</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+  </div>  -->
+
+  <!-- <script>
+    window.onload = () => document.getElementById("donorName").focus();
+
+    const donorForm = document.getElementById('donorForm');
+    const donorTable = document.getElementById('donorTable').getElementsByTagName('tbody')[0];
+
+    donorForm.addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('donorName').value;
+      const gender = document.getElementById('Gender').value;
+      const bloodType = document.getElementById('bloodType').value;
+      const phoneNumber = document.getElementById('phoneNumber').value;
+      const email = document.getElementById('Email').value;
+      const pLocation = document.getElementById('pLocation').value;
+      const sLocation = document.getElementById('sLocation').value;
+      const fullLocation = `${pLocation}, ${sLocation}`;
+
+      const newRow = donorTable.insertRow();
+      newRow.insertCell(0).textContent = name;
+      newRow.insertCell(1).textContent = gender;
+      newRow.insertCell(2).textContent = bloodType;
+      newRow.insertCell(3).textContent = phoneNumber;
+      newRow.insertCell(4).textContent = email;
+      newRow.insertCell(5).textContent = fullLocation;
+
+      donorForm.reset();
+      document.getElementById("donorName").focus();
+    });
+  </script> -->
+</body>
+</html>

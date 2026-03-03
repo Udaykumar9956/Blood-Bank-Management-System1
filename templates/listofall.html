@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Donor List | Blood Bank</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- Bootstrap 4 CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  
+  <style>
+    body {
+      background-color: #fff8f8;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
+      margin-top: 40px;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      font-weight: bold;
+      color: #c82333;
+    }
+
+    .table {
+      background-color: #ffffff;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+
+    .thead-dark {
+      background-color: #dc3545;
+    }
+
+    .thead-dark th {
+      color: white;
+    }
+
+    .back-btn {
+      margin-bottom: 30px;
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+      background-color: #f9f9f9;
+    }
+
+    .no-data {
+      text-align: center;
+      padding: 30px;
+      font-size: 1.2rem;
+      color: #999;
+    }
+
+    @media (max-width: 768px) {
+      .table-responsive {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <a href="/homepage" class="btn btn-outline-danger back-btn">← Back to Home</a>
+    <h2>🩸 Registered Donors List</h2>
+
+    {% if donors %}
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th>Name</th>
+            <th>Gender</th>
+            <th>Blood Type</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Primary Location</th>
+            <th>Secondary Location</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for key, donor in donors.items() %}
+          <tr>
+            <td>{{ donor.name }}</td>
+            <td>{{ donor.gender }}</td>
+            <td><strong>{{ donor.blood_type }}</strong></td>
+            <td>{{ donor.phone_number }}</td>
+            <td>{{ donor.email }}</td>
+            <td>{{ donor.primary_location }}</td>
+            <td>{{ donor.secondary_location }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="no-data">
+      ❌ No donors found in the database.
+    </div>
+    {% endif %}
+  </div>
+
+</body>
+</html>

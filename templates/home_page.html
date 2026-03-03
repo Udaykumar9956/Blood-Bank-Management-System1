@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bank Home</title>
+
+  <!-- Bootstrap CDN -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+  <style>
+    /* Base Reset */
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    /* Hero Section */
+    .hero-container {
+      width: 100%;
+      overflow: hidden;
+    }
+
+    .hero-img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-bottom: 4px solid #dc3545;
+    }
+
+    /* Option Cards */
+    .option-card {
+      border: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      border-radius: 15px;
+    }
+
+    .option-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .option-card img {
+      height: 220px;
+      object-fit: cover; 
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    } 
+
+    .option-card .card-title {
+      font-size: 1.2rem;
+      color: #343a40;
+      margin-top: 10px;
+    }
+
+    /* Navbar Brand */
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+     .navbar-brand2 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-left: auto;
+    }
+  </style>
+
+  <!-- JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <link rel="icon" href="{{ url_for('static', filename='icon.jpg') }}" type="image/jpg">
+
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/homepage">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOWeRmImCOMSWGzrtys6h5gR5Ef5b_kr-UPg&s" style="height: 20px;" alt="Logo" class="rounded">
+      Blood Bank
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" >
+      <span class="navbar-toggler-icon"></span> 
+    </button>
+    <a class="navbar-brand2" href="/">
+      <img src="https://cdn-icons-png.flaticon.com/512/4436/4436646.png" style="height: 20px;" alt="Logo" class="rounded">
+      Log out
+    </a>
+  </nav>
+
+  <!-- Hero Image -->
+  <div class="hero-container">
+    <img src="https://res.cloudinary.com/djxyqgotz/image/upload/v1711426572/IMG-20240326-WA0001_l8scgv.jpg" alt="Banner" class="hero-img"/>
+  </div>
+
+  <!-- Options Grid -->
+  <div class="container mt-5">
+    <div class="row text-center"> 
+
+      <!-- Donor Register --> 
+       <!-- <form action="Add_Donar", method="GET"> -->
+      <div class="col-md-3 mb-4">
+        <div class="card option-card">
+          <a >
+            <img src="https://png.pngtree.com/png-clipart/20190925/original/pngtree-blood-donors-logo-symbol-icon-for-your-needs-png-image_4964110.jpg" class="card-img-top" alt="Donor" >
+          </a>
+          <div class="card-body">  
+            <form action="/add_donar" , method="GET"> <button class ="card-title">Donor Register</button> </form>
+            
+          </div>
+        </div>
+      </div> 
+      <!-- </form> -->
+
+
+      <!-- Patient Register -->
+      <div class="col-md-3 mb-4">
+        <div class="card option-card">
+          <a href="patientreg.html">
+            <img src="https://cgblooddonor.com/images/member.jpg" class="card-img-top" alt="Patient">
+          </a>
+          <div class="card-body">
+             <form action="/finddonar" , method="GET"> <button class ="card-title">Find Donar</button> </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Map -->
+      <div class="col-md-3 mb-4">
+        <div class="card option-card">
+          <a href="https://www.google.com/maps/place/RUDRA+BLOOD+CENTRE/@16.8646815,79.5449274,4431m/data=!3m1!1e3!4m9!1m2!2m1!1sblood+donation+center!3m5!1s0x3a352573704d7b27:0x9548980191093d83!8m2!3d16.8717867!4d79.5624894!15sChVibG9vZCBkb25hdGlvbiBjZW50ZXKSAQpibG9vZF9iYW5rqgFkCgkvbS8wMjA0c24QASoZIhVibG9vZCBkb25hdGlvbiBjZW50ZXIoADIfEAEiG9wrnQTVPgz1utxgzJAy6B7maMTV-9HoZHMLtzIZEAIiFWJsb29kIGRvbmF0aW9uIGNlbnRlcuABAA?authuser=0&entry=ttu&g_ep=EgoyMDI1MDcyMy4wIKXMDSoASAFQAw%3D%3D">
+            <img src="https://png.pngtree.com/png-clipart/20230315/original/pngtree-map-location-pin-with-red-png-image_8989833.png" class="card-img-top" alt="Map">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">Map</h5>
+          </div>
+        </div>
+      </div>
+
+      <!-- List -->
+      <div class="col-md-3 mb-4">
+        <div class="card option-card">
+          <a href="/listofall">
+            <img src="data:image/png;base64,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" class="card-img-top" alt="List">
+          </a>
+          <div class="card-body">
+            <h5 class="card-title">List</h5>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

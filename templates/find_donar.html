@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blood Bank Management System</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+  <style>
+    body {
+      background-color: #fffbea;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+    }
+
+    h1 {
+      text-align: center;
+      color: #c0392b;
+      margin-bottom: 30px;
+    }
+
+    form {
+      background-color: #fdf6e3;
+      padding: 20px;
+      border-radius: 10px;
+      max-width: 500px;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+      color: #333;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 15px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #c0392b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #e74c3c;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f7c6c6;
+      color: #333;
+    }
+
+    tbody tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    .navbar-brand {
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .navbar-brand2 {
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin-left: auto;
+    }
+  </style>
+   <link rel="icon" href="{{ url_for('static', filename='icon.jpg') }}" type="image/jpg">
+
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="/homepage">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTOWeRmImCOMSWGzrtys6h5gR5Ef5b_kr-UPg&s" style="height: 20px;" alt="Logo" class="rounded">
+      Blood Bank
+    </a>
+    <a class="navbar-brand2" href="/">
+      <img src="https://cdn-icons-png.flaticon.com/512/4436/4436646.png" style="height: 20px;" alt="Logo" class="rounded">
+      Log out
+    </a>
+  </nav>
+
+  <h1>Find a Donor</h1>
+
+  <!-- Search Form -->
+  <form action="/displaydonor" method="POST">
+    <label for="bloodType">Blood Type:</label>
+    <select id="bloodType" name="bloodtype" required>
+      <option value="">Select Blood Type</option>
+      <option value="A+">A+</option>
+      <option value="A-">A-</option>
+      <option value="B+">B+</option>
+      <option value="B-">B-</option>
+      <option value="AB+">AB+</option>
+      <option value="AB-">AB-</option>
+      <option value="O+">O+</option>
+      <option value="O-">O-</option>
+    </select>
+
+    <label for="location">Location:</label>
+    <input type="text" id="location" name="location" required placeholder="Enter town name"/>
+
+    <button type="submit">Find Donor</button>
+  </form>
+
+  <!-- Donor Results Table -->
+  {% if donors %}
+    <h2 class="text-center">Matching Donors</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Blood Type</th>
+          <th>Phone</th>
+          <th>Mail</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for donor in donors.values() %}
+          <tr>
+            <td>{{ donor.name }}</td>
+            <td>{{ donor.blood_type }}</td>
+            <td>{{ donor.phone_number }}</td>
+            <td>{{ donor.email }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif donors is not none %}
+    <p class="text-center mt-3">No donors found for that blood type and location.</p>
+  {% endif %}
+
+</body>
+</html>

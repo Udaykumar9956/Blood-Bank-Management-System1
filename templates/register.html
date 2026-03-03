@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Blood Bank</title>
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="icon" href="{{ url_for('static', filename='icon.jpg') }}" type="image/jpg">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(
+                rgba(0, 0, 0, 0.6),
+                rgba(0, 0, 0, 0.6)
+            ),
+            url('https://t4.ftcdn.net/jpg/06/33/01/83/360_F_633018302_KSU5vQKfSGqoJMj468pYHGoNJ97uvx9I.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .left-container, .right-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-container {
+            background: linear-gradient(135deg, #c31432, #240b36);
+        }
+
+        .blood-image {
+            max-width: 85%;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .right-container {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .form-container {
+            width: 100%;
+            max-width: 380px;
+            padding: 30px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #ffecec;
+            font-weight: 600;
+            margin-bottom: 25px;
+        }
+
+        label {
+            color: #f1f1f1;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.9);
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            box-shadow: 0 0 0 2px #ff4d4d;
+        }
+
+        button {
+            background: linear-gradient(135deg, #ff416c, #ff4b2b);
+            border: none;
+            color: white;
+            font-weight: 500;
+            border-radius: 30px;
+            padding: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255,75,43,0.6);
+        }
+
+        .login-link {
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+
+        .login-link a {
+            color: #ffd6d6;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row no-gutters">
+        <div class="col-md-8 left-container">
+            <img class="blood-image"
+                 src="https://img.freepik.com/free-vector/hand-drawn-world-blood-donor-day-instagram-stories_23-2149416938.jpg?semt=ais_hybrid&w=740"
+                 alt="Blood Donation">
+        </div>
+        <div class="col-md-4 right-container">
+            <div class="form-container text-center">
+                <h2>Create Account</h2>
+
+                <form action="/newuser" method="POST">
+                    <label>Username</label>
+                    <input type="text" name="username" required>
+
+                    <label>Email</label>
+                    <input type="email" name="email" required>
+
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" required>
+
+                    <label>Password</label>
+                    <input type="password" name="password" required>
+
+                    <button type="submit" class="btn btn-block mt-2">
+                        Register
+                    </button>
+                </form>
+
+                <div class="login-link">
+                    Already have an account?
+                    <a href="/">Login</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
