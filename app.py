@@ -1,31 +1,44 @@
-import json
-import os
+# app.py
+from flask import Flask, render_template, request, redirect, flash, session
 import firebase_admin
 from firebase_admin import credentials, db
+import json
+import os
 
-firebase_key = json.loads(os.environ["FIREBASE_KEY"])
+# ===============================
+# Firebase Setup (Using Env Var)
+# ===============================
+try:
+    firebase_key_json = os.environ["FIREBASE_KEY"]  # Must be set in Render environment
+    firebase_key = json.loads(firebase_key_json)
+    cred = credentials.Certificate(firebase_key)
+    firebase_admin.initialize_app(cred, {
+        "databaseURL": "https://bloodbank-4d2e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    })
+except Exception as e:
+    print(f"Firebase initialization error: {e}")
+    raise
 
-cred = credentials.Certificate(firebase_key)
-
-firebase_admin.initialize_app(cred, {
-    "databaseURL": "https://bloodbank-4d2e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-})
 ref = db.reference('/')
+
+# ===============================
+# Flask App Setup
+# ===============================
 app = Flask(__name__)
-app.secret_key = "mysecretkey"  
+app.secret_key = os.environ.get("SECRET_KEY", "mysecretkey")  # Optional env var override
 
-
+# ===============================
+# Routes
+# ===============================
 
 @app.route('/')
 def login():
     return render_template('login.html')
 
 
-
 @app.route('/register', methods=['GET'])
 def register():
     return render_template('register.html')
-
 
 
 @app.route('/checkuser', methods=['POST'])
@@ -37,9 +50,8 @@ def check():
         user_info_ref = db.reference(f'user/{username}')
         user_info = user_info_ref.get()
 
-        
-        if user_info and user_info['password'] == password:
-            session['username'] = username  
+        if user_info and user_info.get('password') == password:
+            session['username'] = username
             return redirect('/homepage')
         else:
             flash("❌ Invalid username or password!", "danger")
@@ -48,7 +60,6 @@ def check():
     except Exception as e:
         flash(f"An error occurred: {e}", "danger")
         return redirect('/')
-
 
 
 @app.route('/newuser', methods=['POST'])
@@ -75,7 +86,6 @@ def newuser():
         return redirect('/register')
 
 
-
 @app.route('/homepage')
 def homepage():
     if 'username' not in session:
@@ -83,11 +93,9 @@ def homepage():
     return render_template('home_page.html')
 
 
-
 @app.route('/add_donar')
 def add_donar():
     return render_template('Add_Donsar.html')
-
 
 
 @app.route('/insertdonor', methods=['POST'])
@@ -114,7 +122,6 @@ def insertdonar():
         return redirect('/add_donar')
 
 
-
 @app.route('/finddonar')
 def finddonar():
     return render_template('find_donar.html')
@@ -130,9 +137,7 @@ def displaydonor():
             flash("⚠ Blood type and location are required!", "warning")
             return redirect('/finddonar')
 
-        ref = db.reference('donors')
-        all_donors = ref.get() or {}
-
+        all_donors = db.reference('donors').get() or {}
         matching_donors = {
             key: donor for key, donor in all_donors.items()
             if donor.get("blood_type", "").lower() == bloodtype and
@@ -147,16 +152,19 @@ def displaydonor():
         return redirect('/finddonar')
 
 
-
 @app.route('/listofall')
 def listofall():
     try:
-        ref = db.reference('donors')
-        all_donors = ref.get() or {}
+        all_donors = db.reference('donors').get() or {}
         return render_template('listofall.html', donors=all_donors)
 
     except Exception as e:
         flash(f"Error fetching donors: {e}", "danger")
         return redirect('/homepage')
+
+
+# ===============================
+# Run Flask App
+# ===============================
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
