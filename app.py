@@ -1,15 +1,15 @@
-from flask import *
-import firebase_admin
-from firebase_admin import db, credentials
+import json
 import os
+import firebase_admin
+from firebase_admin import credentials, db
 
-cred = credentials.Certificate(
-    r"C:\Users\91778\Desktop\blood bank managament system\Blood bank ff\Blood bank\firebase-auth.json"
-)
+firebase_key = json.loads(os.environ["FIREBASE_KEY"])
+
+cred = credentials.Certificate(firebase_key)
+
 firebase_admin.initialize_app(cred, {
     "databaseURL": "https://bloodbank-4d2e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
 })
-
 ref = db.reference('/')
 app = Flask(__name__)
 app.secret_key = "mysecretkey"  
