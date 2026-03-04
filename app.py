@@ -1,7 +1,7 @@
 from flask import *
 import firebase_admin
 from firebase_admin import db, credentials
-
+import os
 
 cred = credentials.Certificate(
     r"C:\Users\91778\Desktop\blood bank managament system\Blood bank ff\Blood bank\firebase-auth.json"
@@ -158,8 +158,5 @@ def listofall():
     except Exception as e:
         flash(f"Error fetching donors: {e}", "danger")
         return redirect('/homepage')
-
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 10000)))
